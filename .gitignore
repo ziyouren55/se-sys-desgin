@@ -35,3 +35,4 @@ mydocs/*.md
 !mydocs/todo.md
 !mydocs/changelog.md
 *.jar
+*.zip
