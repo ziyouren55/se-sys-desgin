@@ -9,7 +9,7 @@
 - [x] 实现 `FileSystem`（`mkdir` / `touch` / `ls` / `info`）
 - [x] 实现 `Main`（stdin 循环 + 命令分发）
 - [x] 编写测试包（`PathUtilTest`, `MkdirTest`, `TouchTest`, `LsTest`, `InfoTest`, `IntegrationTest`）
-- [ ] 打包 submission 并提交 Gradescope
+- [x] 打包 submission 并提交 Gradescope
 
 ## 迭代二（待开始）
 
