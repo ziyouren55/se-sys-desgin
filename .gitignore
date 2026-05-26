@@ -30,8 +30,13 @@ bin/
 ### Mac OS ###
 .DS_Store
 
+### Claude Code ###
+.claude/
+
 ### personal profiles ###
 mydocs/*.md
+diedai2.md
+submission.zip
 !mydocs/todo.md
 !mydocs/changelog.md
 *.jar

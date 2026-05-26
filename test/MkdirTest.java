@@ -23,24 +23,28 @@ class MkdirTest {
         assertEquals("", fs.ls("/"));
     }
 
-    @Test void doubleSlashIsIgnored() {
+    @Test void doubleSlashNormalizedCreatesDir() {
+        // /usr//local 规范化为 /usr/local，父目录 /usr 不存在，忽略
         fs.mkdir("/usr//local");
         assertEquals("", fs.ls("/"));
     }
 
-    @Test void trailingSlashIsIgnored() {
+    @Test void trailingSlashNormalizedCreatesDir() {
+        // /usr/ 规范化为 /usr，创建成功
         fs.mkdir("/usr/");
-        assertEquals("", fs.ls("/"));
+        assertEquals("usr", fs.ls("/"));
     }
 
-    @Test void dotSegmentIsIgnored() {
+    @Test void dotSegmentNormalizedCreatesDir() {
+        // /usr/./bin 规范化为 /usr/bin，父 /usr 不存在，忽略
         fs.mkdir("/usr/./bin");
         assertEquals("", fs.ls("/"));
     }
 
-    @Test void dotDotSegmentIsIgnored() {
+    @Test void dotDotSegmentNormalizedCreatesDir() {
+        // /usr/../bin 规范化为 /bin，根下直接创建
         fs.mkdir("/usr/../bin");
-        assertEquals("", fs.ls("/"));
+        assertEquals("bin", fs.ls("/"));
     }
 
     @Test void existingDirKeptAsDir() {
@@ -53,5 +57,10 @@ class MkdirTest {
         fs.touch("/x", 10);
         fs.mkdir("/x");
         assertEquals(0L, fs.info("/x"));
+    }
+
+    @Test void mkdirRootIsIgnored() {
+        fs.mkdir("/");
+        assertEquals("", fs.ls("/"));
     }
 }

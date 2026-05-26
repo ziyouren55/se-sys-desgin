@@ -13,5 +13,10 @@ public class FileNode implements Node {
 
     @Override public String name() { return name; }
     @Override public NodeType type() { return NodeType.FILE; }
-    @Override public long size(SizeContext ctx) { return fileSize; }
+
+    @Override
+    public long size(SizeContext ctx) {
+        if (!ctx.visit(this)) return 0;
+        return fileSize;
+    }
 }

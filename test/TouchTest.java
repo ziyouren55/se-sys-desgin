@@ -35,18 +35,26 @@ class TouchTest {
         assertEquals(42L, fs.info("/x"));
     }
 
-    @Test void doubleSlashIsIgnored() {
+    @Test void doubleSlashNormalizedCreatesFile() {
+        // /a//b.txt 规范化为 /a/b.txt，父 /a 不存在，忽略
         fs.touch("/a//b.txt", 10);
         assertEquals("", fs.ls("/"));
     }
 
-    @Test void trailingSlashIsIgnored() {
+    @Test void trailingSlashNormalizedCreatesFile() {
+        // /a/ 规范化为 /a，在根下创建文件
         fs.touch("/a/", 10);
-        assertEquals("", fs.ls("/"));
+        assertEquals("a", fs.ls("/"));
     }
 
-    @Test void dotSegmentIsIgnored() {
+    @Test void dotSegmentNormalizedCreatesFile() {
+        // /./f.txt 规范化为 /f.txt，在根下创建
         fs.touch("/./f.txt", 10);
+        assertEquals("f.txt", fs.ls("/"));
+    }
+
+    @Test void touchRootIsIgnored() {
+        fs.touch("/", 10);
         assertEquals("", fs.ls("/"));
     }
 }
