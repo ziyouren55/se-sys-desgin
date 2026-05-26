@@ -38,6 +38,22 @@ public class Main {
                     if (result >= 0) System.out.println(result);
                     break;
                 }
+                case "FIND": {
+                    if (parts.length < 3) break;
+                    String result = fs.find(parts[1], parts[2]);
+                    if (result != null && !result.isEmpty()) System.out.println(result);
+                    break;
+                }
+                case "RM": {
+                    if (parts.length < 2) break;
+                    fs.rm(parts[1]);
+                    break;
+                }
+                case "LINK": {
+                    if (parts.length < 3) break;
+                    fs.link(parts[1], parts[2]);
+                    break;
+                }
             }
         }
     }

@@ -30,6 +30,7 @@ public class DirNode implements Node {
 
     @Override
     public long size(SizeContext ctx) {
+        if (!ctx.visit(this)) return 0;
         long total = 0;
         for (Node child : children.values()) {
             total += child.size(ctx);
