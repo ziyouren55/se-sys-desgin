@@ -50,6 +50,14 @@ class FindTest {
         assertEquals("/view/a.txt", fs.find("/view", "a.txt"));
     }
 
+    @Test void findEntersLinkedDirectoryInsideSubtree() {
+        fs.mkdir("/real");
+        fs.touch("/real/a.txt", 10);
+        fs.mkdir("/start");
+        fs.link("/real", "/start/view");
+        assertEquals("/start/view/a.txt", fs.find("/start", "a.txt"));
+    }
+
     @Test void findDoesNotExpandSameDirTwice() {
         fs.mkdir("/data");
         fs.touch("/data/f.txt", 10);

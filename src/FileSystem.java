@@ -163,16 +163,18 @@ public class FileSystem {
             if (!expanded.add(actual)) return;
             DirNode dir = (DirNode) actual;
             for (Node child : dir.listChildren()) {
+                if (child.type() == NodeType.LINK) continue;
                 String childPath = currentPath.equals("/") ? "/" + child.name() : currentPath + "/" + child.name();
-                if (child.type() == NodeType.LINK) {
-                    if (child.name().equals(targetName)) {
-                        results.add(childPath);
-                    }
-                } else {
-                    Node childActual = followLinks(child);
-                    findRecursive(child, childActual, childPath,
-                                  targetName, expanded, results);
-                }
+                Node childActual = followLinks(child);
+                findRecursive(child, childActual, childPath,
+                              targetName, expanded, results);
+            }
+            for (Node child : dir.listChildren()) {
+                if (child.type() != NodeType.LINK) continue;
+                String childPath = currentPath.equals("/") ? "/" + child.name() : currentPath + "/" + child.name();
+                Node childActual = followLinks(child);
+                findRecursive(child, childActual, childPath,
+                              targetName, expanded, results);
             }
         }
     }
